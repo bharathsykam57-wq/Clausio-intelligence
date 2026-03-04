@@ -1,0 +1,142 @@
+[
+  {
+    "id": "q01",
+    "category": "eu_ai_act_definition",
+    "difficulty": "easy",
+    "question": "What is the definition of an AI system under the EU AI Act?",
+    "ground_truth": "An AI system is a machine-based system designed to operate with varying levels of autonomy that may exhibit adaptiveness after deployment, and that, for explicit or implicit objectives, infers from the input it receives how to generate outputs such as predictions, content, recommendations, or decisions."
+  },
+  {
+    "id": "q02",
+    "category": "eu_ai_act_prohibited",
+    "difficulty": "easy",
+    "question": "Which AI applications are prohibited under the EU AI Act?",
+    "ground_truth": "Prohibited AI practices include subliminal manipulation techniques, exploitation of vulnerabilities of specific groups, real-time remote biometric identification systems in public spaces (with limited exceptions), social scoring systems by public authorities, and AI systems used to infer emotions in workplaces or educational institutions."
+  },
+  {
+    "id": "q03",
+    "category": "eu_ai_act_high_risk",
+    "difficulty": "medium",
+    "question": "What obligations do providers of high-risk AI systems have under the EU AI Act?",
+    "ground_truth": "Providers of high-risk AI systems must: implement a quality management system, conduct conformity assessments, register in the EU database, affix CE marking, provide technical documentation, ensure human oversight measures, maintain logs, and inform authorities about serious incidents."
+  },
+  {
+    "id": "q04",
+    "category": "gdpr_rights",
+    "difficulty": "easy",
+    "question": "What are the rights of data subjects under GDPR?",
+    "ground_truth": "Data subjects have the right to access their personal data, rectification of inaccurate data, erasure (right to be forgotten), restriction of processing, data portability, and the right to object to processing including profiling."
+  },
+  {
+    "id": "q05",
+    "category": "gdpr_consent",
+    "difficulty": "medium",
+    "question": "What constitutes valid consent under GDPR?",
+    "ground_truth": "Valid consent must be freely given, specific, informed, and unambiguous. It requires a clear affirmative action from the data subject, cannot be implied by silence or inactivity, must be as easy to withdraw as to give, and must be granular for different processing purposes."
+  },
+  {
+    "id": "q06",
+    "category": "eu_ai_act_gp_ai",
+    "difficulty": "medium",
+    "question": "How does the EU AI Act define and regulate general-purpose AI models?",
+    "ground_truth": "General-purpose AI models are AI models trained on large amounts of data that display significant generality and can perform a wide range of distinct tasks. Providers must provide technical documentation, comply with copyright law, and publish a summary of training data. Models with systemic risk face additional requirements including adversarial testing."
+  },
+  {
+    "id": "q07",
+    "category": "gdpr_breach",
+    "difficulty": "easy",
+    "question": "What are the notification requirements for personal data breaches under GDPR?",
+    "ground_truth": "Controllers must notify the supervisory authority of a personal data breach within 72 hours of becoming aware of it. If the breach is likely to result in high risk to individuals, the controller must also notify the affected data subjects without undue delay."
+  },
+  {
+    "id": "q08",
+    "category": "eu_ai_act_conformity",
+    "difficulty": "hard",
+    "question": "What conformity assessment procedures apply to high-risk AI systems?",
+    "ground_truth": "High-risk AI systems must undergo conformity assessment before being placed on the market. For most high-risk systems, this can be a self-assessment by the provider based on internal checks. For biometric identification and categorization systems, third-party assessment by a notified body is required."
+  },
+  {
+    "id": "q09",
+    "category": "gdpr_dpo",
+    "difficulty": "medium",
+    "question": "When is an organization required to appoint a Data Protection Officer under GDPR?",
+    "ground_truth": "Organizations must appoint a DPO when they are a public authority or body, when they carry out large-scale systematic monitoring of individuals, or when they process special categories of data or criminal conviction data on a large scale."
+  },
+  {
+    "id": "q10",
+    "category": "eu_ai_act_penalties",
+    "difficulty": "medium",
+    "question": "What are the penalties for violating the EU AI Act?",
+    "ground_truth": "Violations of prohibited AI practices can result in fines up to 35 million euros or 7% of global annual turnover. Violations of other obligations for providers and deployers can result in fines up to 15 million euros or 3% of turnover. Providing incorrect information to authorities can result in fines up to 7.5 million euros or 1.5% of turnover."
+  },
+  {
+    "id": "q11",
+    "category": "multi_hop",
+    "difficulty": "hard",
+    "question": "How do GDPR data minimization principles apply to the training of high-risk AI systems under the EU AI Act?",
+    "ground_truth": "GDPR requires that personal data be adequate, relevant and limited to what is necessary for the purpose. The EU AI Act requires high-risk AI training datasets to be subject to data governance practices including examination for biases. Together, these frameworks require AI developers to minimize personal data in training sets while ensuring datasets are representative and free from bias."
+  },
+  {
+    "id": "q12",
+    "category": "multi_hop",
+    "difficulty": "hard",
+    "question": "What transparency obligations exist for both automated decision-making under GDPR and AI systems under the EU AI Act?",
+    "ground_truth": "GDPR Article 22 gives data subjects the right not to be subject to solely automated decisions with significant effects, and requires meaningful information about the logic involved. The EU AI Act requires high-risk AI systems to be transparent, provide instructions for use, and enable human oversight. Together they create layered transparency obligations for AI-driven decisions affecting individuals."
+  },
+  {
+    "id": "q13",
+    "category": "multi_hop",
+    "difficulty": "hard",
+    "question": "Compare the roles of providers and deployers under the EU AI Act with controllers and processors under GDPR.",
+    "ground_truth": "Under the EU AI Act, providers develop and place AI systems on the market and bear primary compliance obligations. Deployers use AI systems in their operations and have obligations regarding human oversight and monitoring. This mirrors GDPR's controller/processor distinction where controllers determine purposes and means of processing (similar to deployers) while processors act on instructions (similar to certain providers)."
+  },
+  {
+    "id": "q14",
+    "category": "eu_ai_act_foundation",
+    "difficulty": "medium",
+    "question": "What is the EU AI Act's approach to foundation models and what systemic risks do they pose?",
+    "ground_truth": "The EU AI Act categorizes general-purpose AI models with high computational training requirements as posing systemic risk. These models must undergo adversarial testing, report serious incidents to the Commission, ensure cybersecurity protections, and provide information about energy consumption. The systemic risk threshold is set at 10^25 FLOPs of training compute."
+  },
+  {
+    "id": "q15",
+    "category": "gdpr_international",
+    "difficulty": "medium",
+    "question": "Under what conditions can personal data be transferred outside the EU under GDPR?",
+    "ground_truth": "Personal data can be transferred to third countries based on an adequacy decision by the European Commission, appropriate safeguards such as standard contractual clauses or binding corporate rules, or specific derogations such as explicit consent, vital interests, or performance of a contract."
+  },
+  {
+    "id": "q16",
+    "category": "eu_ai_act_sandbox",
+    "difficulty": "medium",
+    "question": "What are AI regulatory sandboxes under the EU AI Act and who can access them?",
+    "ground_truth": "AI regulatory sandboxes are controlled environments established by national competent authorities to test innovative AI systems before market placement. They allow providers to develop and test AI systems under regulatory supervision with relaxed compliance requirements. SMEs and startups have priority access. Participants remain liable for any harm caused during testing."
+  },
+  {
+    "id": "q17",
+    "category": "gdpr_lawful_basis",
+    "difficulty": "easy",
+    "question": "What are the lawful bases for processing personal data under GDPR?",
+    "ground_truth": "The six lawful bases are: consent of the data subject, performance of a contract, compliance with a legal obligation, protection of vital interests, performance of a task in the public interest, and legitimate interests of the controller or third party (subject to balancing test)."
+  },
+  {
+    "id": "q18",
+    "category": "out_of_scope",
+    "difficulty": "oos",
+    "question": "What is the current French corporate income tax rate?",
+    "ground_truth": "OUT_OF_SCOPE"
+  },
+  {
+    "id": "q19",
+    "category": "out_of_scope",
+    "difficulty": "oos",
+    "question": "Who is the current president of the European Commission?",
+    "ground_truth": "OUT_OF_SCOPE"
+  },
+  {
+    "id": "q20",
+    "category": "eu_ai_act_human_oversight",
+    "difficulty": "medium",
+    "question": "What human oversight requirements does the EU AI Act impose on high-risk AI systems?",
+    "ground_truth": "High-risk AI systems must be designed to allow human oversight through measures that enable operators to understand and monitor the system's operation, implement stop or override functions, and intervene or interrupt the system. Deployers must assign oversight to natural persons with the necessary competence, authority, and resources."
+  }
+]

@@ -1,0 +1,57 @@
+# Environment
+.env
+.env.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Eval results (generated, not source)
+backend/eval/results/
+
+# Node / Next.js
+node_modules/
+.next/
+.npm
+
+# PDFs (large binary files, downloaded at runtime)
+*.pdf
+
+# Logs
+*.log
+logs/
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker volumes
+pgdata/
+redisdata/
+
+# Model cache (sentence-transformers downloads ~80MB)
+backend/models/
