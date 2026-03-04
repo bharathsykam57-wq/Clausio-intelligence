@@ -37,13 +37,8 @@ def init_db() -> None:
                 created_at TIMESTAMPTZ DEFAULT NOW()
             )
         """))
-        # IVFFlat index: lists=100 is optimal for up to ~1M rows
-        # Uses cosine distance (best for normalized embedding vectors)
-        conn.execute(text("""
-            CREATE INDEX IF NOT EXISTS documents_embedding_idx
-            ON documents USING ivfflat (embedding vector_cosine_ops)
-            WITH (lists = 100)
-        """))
+        # NOTE: IVFFlat index created after ingestion (needs 3900+ rows)
+        # Run create_ivfflat_index() after full ingestion on Day 5
         conn.commit()
     logger.info("Database initialized")
 
@@ -64,41 +59,38 @@ def insert_documents(embedded_docs: list[dict[str, Any]]) -> int:
 
 
 def similarity_search(query_embedding: list[float], top_k: int = 6, filter_source: str | None = None) -> list[dict]:
-    """
-    Cosine similarity search.
-    Returns top_k chunks with content, metadata, and similarity score.
-    Optionally filter by source document key.
-    """
+    """Cosine similarity search."""
+    emb_str = str(query_embedding)
     with engine.connect() as conn:
         if filter_source:
-            result = conn.execute(
-                text("""
-                    SELECT content, metadata, 1 - (embedding <=> :emb::vector) AS similarity
-                    FROM documents WHERE metadata->>'source' = :src
-                    ORDER BY embedding <=> :emb::vector LIMIT :k
-                """),
-                {"emb": str(query_embedding), "src": filter_source, "k": top_k},
-            )
+            sql = f"""
+                SELECT content, metadata, 1 - (embedding <=> '{emb_str}'::vector) AS similarity
+                FROM documents WHERE metadata->>\'source\' = '{filter_source}'
+                ORDER BY embedding <=> '{emb_str}'::vector LIMIT {top_k}
+            """
         else:
-            result = conn.execute(
-                text("""
-                    SELECT content, metadata, 1 - (embedding <=> :emb::vector) AS similarity
-                    FROM documents
-                    ORDER BY embedding <=> :emb::vector LIMIT :k
-                """),
-                {"emb": str(query_embedding), "k": top_k},
-            )
-        rows = result.fetchall()
-    return [
-        {
-            "content": row.content,
-            "metadata": row.metadata if isinstance(row.metadata, dict) else json.loads(row.metadata),
-            "similarity": float(row.similarity),
-        }
-        for row in rows
-    ]
+            sql = f"""
+                SELECT content, metadata, 1 - (embedding <=> '{emb_str}'::vector) AS similarity
+                FROM documents
+                ORDER BY embedding <=> '{emb_str}'::vector LIMIT {top_k}
+            """
+        rows = conn.execute(text(sql)).fetchall()
+        return [
+            {"content": row[0], "metadata": row[1] if isinstance(row[1], dict) else {}, "similarity": float(row[2])}
+            for row in rows
+        ]
 
-
+def create_ivfflat_index() -> None:
+    """Run this after ingestion when 3900+ rows exist."""
+    with engine.connect() as conn:
+        conn.execute(text("""
+            CREATE INDEX IF NOT EXISTS documents_embedding_idx
+            ON documents USING ivfflat (embedding vector_cosine_ops)
+            WITH (lists = 100)
+        """))
+        conn.commit()
+    logger.info("IVFFlat index created")
+          
 def get_document_count() -> int:
     with engine.connect() as conn:
         return conn.execute(text("SELECT COUNT(*) FROM documents")).scalar()
