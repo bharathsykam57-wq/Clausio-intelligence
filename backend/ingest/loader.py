@@ -17,7 +17,9 @@ from pathlib import Path
 from typing import Union
 import httpx
 from pypdf import PdfReader
+import re
 from langchain.schema import Document
+import re
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from loguru import logger
 from config import get_settings
@@ -37,6 +39,8 @@ PUBLIC_DOCS = {
         "language": "fr",
     },
 }
+
+
 
 
 def load_pdf_from_bytes(data: bytes, metadata: dict) -> list[Document]:
