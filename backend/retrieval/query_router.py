@@ -81,7 +81,7 @@ def classify_query(query: str) -> QueryType:
         logger.warning(f"Router failed ({e}), defaulting to SINGLE_CHUNK")
         return QueryType.SINGLE_CHUNK
 
-
+# out-of-scope response to return when router classifies as OUT_OF_SCOPE
 OUT_OF_SCOPE_RESPONSE = (
     "This question falls outside the knowledge base. "
     "LexIA only answers questions about the EU Artificial Intelligence Act and GDPR/RGPD. "
