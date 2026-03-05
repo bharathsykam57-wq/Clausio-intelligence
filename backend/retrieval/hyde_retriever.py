@@ -23,6 +23,7 @@ IMPORTANT: Always rerank against ORIGINAL query, not the hypothesis.
   Reranking against hypothesis = testing "does chunk match my made-up answer"
   Reranking against query = testing "does chunk answer the user's question"
 """
+# HyDE inspired by "Zero-Shot Retrieval Augmentation with Hypothetical Document Embeddings" (https://arxiv.org/abs/2212.10496)
 from mistralai import Mistral
 from loguru import logger
 from ingest.embedder import embed_texts
@@ -77,7 +78,7 @@ def hyde_retrieve(
             query=query,                      # original query for reranking
             top_k=top_k,
             filter_source=filter_source,
-            query_embedding=hyp_embedding,    # hypothesis embedding for search
+            query_embedding=hyp_embedding,    # hypothesis embedding for search 
         )
         logger.info(f"HyDE retrieval returned {len(results)} chunks")
         return results
