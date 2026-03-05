@@ -1,5 +1,5 @@
 """
-retrieval/query_router.py  ★ NEW in v2
+retrieval/query_router.py 
 Query classification and routing.
 
 THREE QUERY TYPES:

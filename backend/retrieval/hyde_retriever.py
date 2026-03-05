@@ -1,5 +1,5 @@
 """
-retrieval/hyde_retriever.py  ★ NEW in v2
+retrieval/hyde_retriever.py  
 HyDE — Hypothetical Document Embeddings
 
 THE PROBLEM WITH DIRECT QUERY EMBEDDING:

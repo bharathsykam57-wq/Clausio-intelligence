@@ -1,5 +1,5 @@
 """
-chain/contradiction.py  ★ NEW in v2
+chain/contradiction.py 
 Detects conflicting information across retrieved chunks.
 
 THE PROBLEM:
