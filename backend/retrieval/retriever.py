@@ -77,4 +77,9 @@ def retrieve(
         cand["rerank_score"] = float(score)
 
     reranked = sorted(candidates, key=lambda x: x["rerank_score"], reverse=True)
+    # Relative threshold: drop chunks more than 4.0 points below top score
+    # Prevents noise without dropping valid low-scoring correct answers
+    if reranked:
+        top_score = reranked[0]["rerank_score"]
+        reranked = [c for c in reranked if top_score - c["rerank_score"] <= 4.0]
     return reranked[:final_k]
