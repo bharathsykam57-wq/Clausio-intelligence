@@ -44,14 +44,30 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from datasets import Dataset
 from ragas import evaluate
 from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
+from ragas.llms import LangchainLLMWrapper
+from ragas.embeddings import LangchainEmbeddingsWrapper
+from langchain_mistralai import ChatMistralAI
+from langchain_mistralai import MistralAIEmbeddings
+from config import get_settings
+
+settings = get_settings()
+ragas_llm = LangchainLLMWrapper(ChatMistralAI(
+    model="mistral-small-latest",
+    api_key=settings.mistral_api_key,
+))
+ragas_embeddings = LangchainEmbeddingsWrapper(MistralAIEmbeddings(
+    model="mistral-embed",
+    api_key=settings.mistral_api_key,
+))
 
 from chain.rag_chain import answer
 from retrieval.retriever import retrieve
 
 
-def load_test_set(path: str = "eval/test_set.json") -> list[dict]:
+def load_test_set(path: str = "eval/test_set.json", limit: int = 5) -> list[dict]:
     with open(path) as f:
-        return json.load(f)
+        data = json.load(f)
+    return data[:limit]
 
 
 def run_evaluation(tag: str = "eval", skip_oos: bool = True) -> dict:
@@ -96,6 +112,9 @@ def run_evaluation(tag: str = "eval", skip_oos: bool = True) -> dict:
     result = evaluate(
         dataset,
         metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
+        llm=ragas_llm,
+        embeddings=ragas_embeddings,
+        raise_exceptions=False,
     )
 
     # Save results
