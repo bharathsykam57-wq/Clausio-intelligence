@@ -1,3 +1,4 @@
+/* Global CSS file for the Next.js application. This file includes font imports, Tailwind CSS directives, and custom styles for the application. */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
 @tailwind base;
 @tailwind components;

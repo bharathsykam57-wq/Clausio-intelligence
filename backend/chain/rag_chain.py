@@ -195,7 +195,7 @@ async def answer_stream(question: str, history: list[dict] | None = None, filter
             "contradiction": {"has_contradiction": False, "explanation": "", "checked": False},
             "follow_up_questions": [],
         }
-        yield f"\n[[METADATA]]{json.dumps(meta)}"
+        yield f"[[METADATA]]{json.dumps(meta)}"
         return
 
     if query_type == QueryType.MULTI_HOP:
@@ -205,7 +205,7 @@ async def answer_stream(question: str, history: list[dict] | None = None, filter
 
     if not chunks:
         yield "No relevant information found in the knowledge base."
-        yield f"\n[[METADATA]]{json.dumps({'sources': [], 'query_type': query_type.value, 'chunks_used': 0, 'confidence': {'level': 'LOW', 'score': 0.0, 'message': 'No matches.'}, 'contradiction': {'has_contradiction': False, 'explanation': '', 'checked': False}, 'follow_up_questions': []})}"
+        yield f"[[METADATA]]{json.dumps({'sources': [], 'query_type': query_type.value, 'chunks_used': 0, 'confidence': {'level': 'LOW', 'score': 0.0, 'message': 'No matches.'}, 'contradiction': {'has_contradiction': False, 'explanation': '', 'checked': False}, 'follow_up_questions': []})}"
         return
 
     contradiction = check_contradictions(chunks)
@@ -245,4 +245,4 @@ async def answer_stream(question: str, history: list[dict] | None = None, filter
         },
         "follow_up_questions": follow_ups,
     }
-    yield f"\n[[METADATA]]{json.dumps(meta)}"
+    yield f"[[METADATA]]{json.dumps(meta)}"

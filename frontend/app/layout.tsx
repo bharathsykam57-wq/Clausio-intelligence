@@ -1,3 +1,4 @@
+// Layout Component for the Next.js application
 import type { Metadata } from "next";
 import "./globals.css";
 
