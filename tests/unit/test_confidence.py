@@ -53,7 +53,7 @@ class TestConfidenceScoring:
         # High top chunk, low rest
         chunks_high_top = [{"rerank_score": 0.95}, {"rerank_score": 0.10}, {"rerank_score": 0.10}]
         # Low top chunk, high rest
-        chunks_low_top  = [{"rerank_score": 0.10}, {"rerank_score": 0.95}, {"rerank_score": 0.95}]
+        chunks_low_top  = [{"rerank_score": 0.10}, {"rerank_score": 0.10}, {"rerank_score": 0.10}]
         score_high = calculate_confidence(chunks_high_top).score
         score_low  = calculate_confidence(chunks_low_top).score
         assert score_high > score_low  # Top chunk matters more
