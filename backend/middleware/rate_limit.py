@@ -27,7 +27,7 @@ from config import get_settings
 
 settings = get_settings()
 
-
+# Rate limit settings (can be overridden by environment variables)
 def check_rate_limit(user_id: int, endpoint: str = "chat") -> None:
     """
     Check if user has exceeded rate limits.

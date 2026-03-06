@@ -35,7 +35,7 @@ from config import get_settings
 settings = get_settings()
 _client: Any = None
 
-
+# Redis client with lazy initialization and error handling
 def get_redis():
     global _client
     if not REDIS_AVAILABLE:

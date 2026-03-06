@@ -22,6 +22,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import QueuePool
 from loguru import logger
 from config import get_settings
+from typing import Generator
 
 settings = get_settings()
 
@@ -39,7 +40,7 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-def get_db() -> Session:
+def get_db() -> Generator[Session, None, None]:
     """
     FastAPI dependency that provides a database session.
     Automatically closes the session when the request completes.
