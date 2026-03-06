@@ -1,3 +1,4 @@
+// ContradictionAlert Component
 "use client";
 import { Contradiction } from "../lib/api";
 

@@ -1,3 +1,4 @@
+// ConfidenceBadge Component 
 "use client";
 import { Confidence } from "../lib/api";
 
