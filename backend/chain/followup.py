@@ -1,5 +1,5 @@
 """
-chain/followup.py  ★ NEW in v2
+chain/followup.py 
 Generates follow-up question suggestions grounded in retrieved chunks.
 
 WHY GROUNDED FOLLOW-UPS?

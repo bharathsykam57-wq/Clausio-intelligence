@@ -10,12 +10,10 @@ from auth.models import Base as AuthBase
 
 
 def init_all_tables() -> None:
-    """Initialize all tables: users + documents + pgvector extension."""
+    # Create documents table with vector extension for embeddings
     with engine.connect() as conn:
-        # pgvector extension
         conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
 
-        # Documents table (for RAG)
         conn.execute(text("""
             CREATE TABLE IF NOT EXISTS documents (
                 id         BIGSERIAL PRIMARY KEY,
@@ -30,8 +28,12 @@ def init_all_tables() -> None:
             ON documents USING ivfflat (embedding vector_cosine_ops)
             WITH (lists = 100)
         """))
+        conn.commit()
 
-        # Request logs table (for audit trail)
+    # users table created here first
+    AuthBase.metadata.create_all(bind=engine)
+
+    with engine.connect() as conn:
         conn.execute(text("""
             CREATE TABLE IF NOT EXISTS request_logs (
                 id          BIGSERIAL PRIMARY KEY,
@@ -46,6 +48,4 @@ def init_all_tables() -> None:
         """))
         conn.commit()
 
-    # Create auth tables via SQLAlchemy ORM
-    AuthBase.metadata.create_all(bind=engine)
     logger.info("All database tables initialized")
