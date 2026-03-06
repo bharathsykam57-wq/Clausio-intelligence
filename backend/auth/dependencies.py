@@ -12,6 +12,7 @@ TWO AUTH METHODS supported:
   2. API key           →  X-API-Key: csk-xxxxx
      (for programmatic / CLI access — same as OpenAI's pattern)
 """
+# Standard Library
 from fastapi import Depends, HTTPException, Security, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, APIKeyHeader
 from sqlalchemy.orm import Session

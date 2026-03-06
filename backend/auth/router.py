@@ -2,6 +2,7 @@
 auth/router.py
 Authentication endpoints: register, login, profile, API key management.
 """
+# Standard Library
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
