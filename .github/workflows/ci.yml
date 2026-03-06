@@ -36,7 +36,7 @@ jobs:
           JWT_SECRET: test-secret-for-ci-only
           DATABASE_URL: sqlite:///./test.db
           REDIS_URL: redis://localhost:6379
-        run: pytest tests/unit/ -v --tb=short
+        run: pytest ../tests/unit/ -v --tb=short
 
   lint:
     runs-on: ubuntu-latest
