@@ -35,7 +35,7 @@ services:
       - DATABASE_URL=postgresql://lexia:lexia@db:5432/lexia
       - REDIS_URL=redis://redis:6379
       - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
-      - CORS_ORIGINS=["http://localhost:3000"]
+      - CORS_ORIGINS=["http://localhost:3000","http://localhost:3002"]
       - ENVIRONMENT=development
       - DEBUG=true
     ports: ["8000:8000"]

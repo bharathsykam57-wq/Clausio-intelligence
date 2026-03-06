@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { streamChat, Source, ChatMeta, Message } from "../lib/api";
+import { streamChat, login, register, Source, ChatMeta, Message } from "../lib/api";
 import ConfidenceBadge from "../components/ConfidenceBadge";
 import ContradictionAlert from "../components/ContradictionAlert";
 import FollowUpSuggestions from "../components/FollowUpSuggestions";
@@ -38,6 +38,124 @@ function ThinkingDots() {
   );
 }
 
+// ── Auth Form ─────────────────────────────────────────────────────────────────
+
+function AuthForm({
+  onAuth,
+}: {
+  onAuth: (token: string) => void;
+}) {
+  const [mode, setMode] = useState<"login" | "register">("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!email || !password) return;
+    setLoading(true);
+    setError("");
+    try {
+      const res = mode === "login"
+        ? await login(email, password)
+        : await register(email, password);
+      onAuth(res.access_token);
+    } catch (e: any) {
+      setError(e.message || "Something went wrong");
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{
+        width: "100%", maxWidth: 400, padding: "40px 36px",
+        background: "rgba(255,255,255,0.02)", border: "1px solid rgba(201,168,76,0.2)",
+        borderRadius: 12,
+      }}>
+        {/* Logo */}
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <div style={{ fontSize: 10, letterSpacing: 5, color: "rgba(201,168,76,0.6)", fontFamily: "'JetBrains Mono',monospace", marginBottom: 8 }}>
+            EU LEGAL INTELLIGENCE
+          </div>
+          <h1 style={{ fontFamily: "'Playfair Display',Georgia,serif", fontSize: 36, fontWeight: 400, color: "var(--parchment)", lineHeight: 1 }}>
+            Lex<span style={{ color: "var(--gold)", fontStyle: "italic" }}>IA</span>
+          </h1>
+          <p style={{ fontSize: 12, color: "rgba(245,240,232,0.3)", marginTop: 6 }}>EU AI Act · GDPR/RGPD</p>
+        </div>
+
+        {/* Mode toggle */}
+        <div style={{ display: "flex", marginBottom: 24, background: "rgba(255,255,255,0.03)", borderRadius: 6, padding: 3 }}>
+          {(["login", "register"] as const).map(m => (
+            <button key={m} onClick={() => { setMode(m); setError(""); }} style={{
+              flex: 1, padding: "7px 0", borderRadius: 4, border: "none", cursor: "pointer",
+              fontSize: 11, letterSpacing: 2, fontFamily: "'JetBrains Mono',monospace",
+              background: mode === m ? "rgba(201,168,76,0.15)" : "transparent",
+              color: mode === m ? "var(--gold-light)" : "rgba(255,255,255,0.3)",
+              transition: "all 0.15s",
+            }}>
+              {m.toUpperCase()}
+            </button>
+          ))}
+        </div>
+
+        {/* Inputs */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handleSubmit()}
+            style={{
+              background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: 6, padding: "11px 14px", color: "var(--parchment)", fontSize: 14,
+              fontFamily: "'DM Sans',sans-serif", outline: "none",
+            }}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            onKeyDown={e => e.key === "Enter" && handleSubmit()}
+            style={{
+              background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: 6, padding: "11px 14px", color: "var(--parchment)", fontSize: 14,
+              fontFamily: "'DM Sans',sans-serif", outline: "none",
+            }}
+          />
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div style={{ fontSize: 12, color: "#e07070", marginBottom: 14, fontFamily: "'JetBrains Mono',monospace" }}>
+            {error}
+          </div>
+        )}
+
+        {/* Submit */}
+        <button
+          onClick={handleSubmit}
+          disabled={loading || !email || !password}
+          style={{
+            width: "100%", padding: "12px 0", borderRadius: 6, border: "none",
+            background: loading || !email || !password ? "rgba(201,168,76,0.1)" : "rgba(201,168,76,0.85)",
+            color: loading || !email || !password ? "rgba(201,168,76,0.3)" : "var(--ink)",
+            fontSize: 12, letterSpacing: 2, fontFamily: "'JetBrains Mono',monospace",
+            cursor: loading || !email || !password ? "not-allowed" : "pointer",
+            transition: "all 0.2s",
+          }}
+        >
+          {loading ? "..." : mode === "login" ? "SIGN IN" : "CREATE ACCOUNT"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Message Bubble ────────────────────────────────────────────────────────────
+
 function MessageBubble({ msg, onFollowUp }: { msg: ChatMessage; onFollowUp: (q: string) => void }) {
   const isUser = msg.role === "user";
   return (
@@ -51,7 +169,7 @@ function MessageBubble({ msg, onFollowUp }: { msg: ChatMessage; onFollowUp: (q: 
         {!isUser && msg.meta?.query_type && <QueryTypeBadge queryType={msg.meta.query_type} />}
       </div>
 
-      {/* Contradiction alert — above the bubble */}
+      {/* Contradiction alert */}
       {!isUser && msg.meta?.contradiction && (
         <div style={{ maxWidth: "80%", width: "100%" }}>
           <ContradictionAlert contradiction={msg.meta.contradiction} />
@@ -78,14 +196,10 @@ function MessageBubble({ msg, onFollowUp }: { msg: ChatMessage; onFollowUp: (q: 
         )}
       </div>
 
-      {/* Metadata below bubble */}
+      {/* Metadata */}
       {!isUser && msg.meta && !msg.isStreaming && (
         <div style={{ maxWidth: "80%", marginTop: 8 }}>
-
-          {/* Confidence */}
           <ConfidenceBadge confidence={msg.meta.confidence} />
-
-          {/* Sources */}
           {msg.meta.sources && msg.meta.sources.length > 0 && (
             <div style={{ marginTop: 8 }}>
               <div style={{ fontSize: 9, letterSpacing: 3, color: "rgba(201,168,76,0.4)", marginBottom: 4, fontFamily: "'JetBrains Mono', monospace" }}>
@@ -96,8 +210,6 @@ function MessageBubble({ msg, onFollowUp }: { msg: ChatMessage; onFollowUp: (q: 
               </div>
             </div>
           )}
-
-          {/* Follow-up suggestions */}
           <FollowUpSuggestions questions={msg.meta.follow_up_questions} onSelect={onFollowUp} />
         </div>
       )}
@@ -105,7 +217,10 @@ function MessageBubble({ msg, onFollowUp }: { msg: ChatMessage; onFollowUp: (q: 
   );
 }
 
+// ── Main Page ─────────────────────────────────────────────────────────────────
+
 export default function Home() {
+  const [token, setToken] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -124,10 +239,15 @@ export default function Home() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // ── Show auth form when not logged in ──
+  if (!token) {
+    return <AuthForm onAuth={(t) => setToken(t)} />;
+  }
+
   const getHistory = (): Message[] =>
     messages.filter(m => !m.isStreaming).map(m => ({ role: m.role, content: m.content })).slice(-8);
 
-  const send = useCallback(async (text?: string) => {
+  const send = async (text?: string) => {
     const q = (text || input).trim();
     if (!q || loading) return;
     setInput("");
@@ -140,7 +260,7 @@ export default function Home() {
 
     try {
       let fullText = "";
-      for await (const event of streamChat(q, getHistory(), filter || undefined)) {
+      for await (const event of streamChat(q, getHistory(), filter || undefined, token)) {
         if (event.type === "token") {
           fullText += event.text;
           setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: fullText } : m));
@@ -152,12 +272,14 @@ export default function Home() {
         }
       }
     } catch {
-      setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: "Backend unavailable. Start the backend with `docker-compose up`.", isStreaming: false } : m));
+      setMessages(prev => prev.map(m => m.id === assistantId ? {
+        ...m, content: "Backend unavailable. Start the backend with `docker-compose up`.", isStreaming: false,
+      } : m));
     }
 
     setLoading(false);
     inputRef.current?.focus();
-  }, [input, loading, filter, messages]);
+  };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -199,11 +321,18 @@ export default function Home() {
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: docsCount ? "var(--gold)" : "#555" }} />
               {docsCount !== null ? `${docsCount.toLocaleString()} chunks indexed` : "Connecting..."}
             </div>
-            <button onClick={() => fileRef.current?.click()} style={{
-              background: "rgba(201,168,76,0.07)", border: "1px solid rgba(201,168,76,0.2)",
-              color: "var(--gold-light)", fontSize: 11, padding: "5px 12px", borderRadius: 4,
-              cursor: "pointer", fontFamily: "'JetBrains Mono',monospace", letterSpacing: 1,
-            }}>+ UPLOAD PDF</button>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={() => fileRef.current?.click()} style={{
+                background: "rgba(201,168,76,0.07)", border: "1px solid rgba(201,168,76,0.2)",
+                color: "var(--gold-light)", fontSize: 11, padding: "5px 12px", borderRadius: 4,
+                cursor: "pointer", fontFamily: "'JetBrains Mono',monospace", letterSpacing: 1,
+              }}>+ UPLOAD PDF</button>
+              <button onClick={() => setToken(null)} style={{
+                background: "transparent", border: "1px solid rgba(255,255,255,0.08)",
+                color: "rgba(255,255,255,0.3)", fontSize: 11, padding: "5px 12px", borderRadius: 4,
+                cursor: "pointer", fontFamily: "'JetBrains Mono',monospace", letterSpacing: 1,
+              }}>SIGN OUT</button>
+            </div>
             <input ref={fileRef} type="file" accept=".pdf" style={{ display: "none" }} onChange={handleUpload} />
             {uploadMsg && <div style={{ fontSize: 10, color: "var(--gold)", fontFamily: "'JetBrains Mono',monospace" }}>{uploadMsg}</div>}
           </div>
