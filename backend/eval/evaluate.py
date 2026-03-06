@@ -108,6 +108,7 @@ def run_evaluation(tag: str = "eval", skip_oos: bool = True) -> dict:
         "ground_truth": ground_truths,
     })
 
+    # Evaluate metrics
     logger.info("Running RAGAS metrics...")
     result = evaluate(
         dataset,
