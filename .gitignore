@@ -55,3 +55,18 @@ redisdata/
 
 # Model cache (sentence-transformers downloads ~80MB)
 backend/models/
+
+# SQLite test database
+test.db
+
+# Alembic
+migrations/versions/__pycache__/
+
+# PyCache in tests
+tests/__pycache__/
+tests/unit/__pycache__/
+tests/integration/__pycache__/
+
+# Misc Python artifacts
+*.pyc
+.mypy_cache/
