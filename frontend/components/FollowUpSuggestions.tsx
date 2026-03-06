@@ -1,3 +1,4 @@
+// FollowUpSuggestions Component
 "use client";
 
 interface Props {

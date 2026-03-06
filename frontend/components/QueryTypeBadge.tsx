@@ -1,3 +1,4 @@
+// QueryTypeBadge Component
 "use client";
 
 const CONFIG: Record<string, { label: string; color: string; bg: string }> = {
