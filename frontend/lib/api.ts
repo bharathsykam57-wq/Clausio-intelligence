@@ -38,10 +38,54 @@ export interface Message {
   content: string;
 }
 
-export async function sendChat(question: string, history: Message[], filterSource?: string): Promise<ChatResponse> {
-  const res = await fetch(`${API_URL}/chat`, {
+export interface AuthResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+}
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+
+export async function register(email: string, password: string): Promise<AuthResponse> {
+  const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error((err as any).detail || `Register error ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function login(email: string, password: string): Promise<AuthResponse> {
+  const res = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error((err as any).detail || `Login error ${res.status}`);
+  }
+  return res.json();
+}
+
+// ── Chat ──────────────────────────────────────────────────────────────────────
+
+export async function sendChat(
+  question: string,
+  history: Message[],
+  filterSource?: string,
+  token?: string,
+): Promise<ChatResponse> {
+  const res = await fetch(`${API_URL}/chat`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
     body: JSON.stringify({ question, history, filter_source: filterSource || null }),
   });
   if (!res.ok) {
@@ -55,10 +99,14 @@ export async function* streamChat(
   question: string,
   history: Message[],
   filterSource?: string,
+  token?: string,
 ): AsyncGenerator<{ type: "token"; text: string } | { type: "metadata"; data: ChatMeta } | { type: "done" }> {
   const res = await fetch(`${API_URL}/chat/stream`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
     body: JSON.stringify({ question, history, filter_source: filterSource || null }),
   });
   if (!res.ok) throw new Error(`Stream error ${res.status}`);
@@ -94,6 +142,8 @@ export async function* streamChat(
   }
   yield { type: "done" };
 }
+
+// ── Misc ──────────────────────────────────────────────────────────────────────
 
 export async function getHealth(): Promise<{ status: string; documents_indexed: number; model: string }> {
   const res = await fetch(`${API_URL}/health`);
