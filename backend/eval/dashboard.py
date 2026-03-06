@@ -39,7 +39,7 @@ with open(summary_path) as f:
 
 df_summary = pd.DataFrame(history)
 
-# ── Metric Evolution Chart ──
+# Metric Evolution Chart 
 st.subheader("Metric Evolution by Run")
 
 METRICS = ["faithfulness", "answer_relevancy", "context_precision", "context_recall"]
