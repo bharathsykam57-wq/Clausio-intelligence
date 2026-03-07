@@ -16,17 +16,18 @@ WHY TWO STAGES?
   Result: ~18% improvement in precision@3 in our evaluation.
 """
 from loguru import logger
-from sentence_transformers import CrossEncoder
+# CrossEncoder imported lazily in get_reranker()
 from ingest.embedder import embed_query
 from ingest.vectorstore import similarity_search
 from config import get_settings
 
 settings = get_settings()
-_reranker: CrossEncoder | None = None
+_reranker = None
 
 
-def get_reranker() -> CrossEncoder:
+def get_reranker():
     global _reranker
+    from sentence_transformers import CrossEncoder
     if _reranker is None:
         # Multilingual model — handles EN (AI Act) and FR (RGPD) equally well
         logger.info("Loading cross-encoder reranker (first time only)...")
