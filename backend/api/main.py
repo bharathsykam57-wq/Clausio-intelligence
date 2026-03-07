@@ -191,3 +191,15 @@ async def stats(current_user: UserDB = Depends(get_current_user)):
         "features": ["hyde", "query_routing", "contradiction", "confidence", "followups",
                      "jwt_auth", "api_key_auth", "rate_limiting", "redis_caching", "audit_log"],
     }
+
+origins = [
+    "https://clausio-intelligence.vercel.app",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
