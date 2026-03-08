@@ -22,4 +22,3 @@ langchain-text-splitters==0.2.4
 pypdf==4.2.0
 loguru==0.7.2
 tenacity==8.3.0
-sentence-transformers==3.0.1
