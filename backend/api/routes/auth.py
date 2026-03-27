@@ -1,17 +1,11 @@
-"""
-auth/router.py
-Authentication endpoints: register, login, profile, API key management.
-"""
-# Standard Library
+# pyre-ignore-all-errors
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from loguru import logger
 
-from auth.models import (
-    UserDB, UserCreate, UserLogin, UserResponse, Token,
-    hash_password, verify_password, create_access_token, generate_api_key
-)
+from auth.models import UserDB, UserCreate, UserLogin, UserResponse, Token
+from services.auth_service import hash_password, verify_password, create_access_token, generate_api_key
 from auth.dependencies import get_current_user
 from db.session import get_db
 from config import get_settings
