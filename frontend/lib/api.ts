@@ -150,10 +150,14 @@ export async function getHealth(): Promise<{ status: string; documents_indexed: 
   return res.json();
 }
 
-export async function uploadPDF(file: File): Promise<{ message: string }> {
+export async function uploadPDF(file: File, token?: string): Promise<{ message: string }> {
   const form = new FormData();
   form.append("file", file);
-  const res = await fetch(`${API_URL}/ingest`, { method: "POST", body: form });
+  const res = await fetch(`${API_URL}/ingest`, { 
+    method: "POST", 
+    body: form,
+    headers: token ? { "Authorization": `Bearer ${token}` } : undefined
+  });
   if (!res.ok) throw new Error(`Upload error ${res.status}`);
   return res.json();
 }
