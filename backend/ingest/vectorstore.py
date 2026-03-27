@@ -63,18 +63,20 @@ def similarity_search(query_embedding: list[float], top_k: int = 6, filter_sourc
     emb_str = str(query_embedding)
     with engine.connect() as conn:
         if filter_source:
-            sql = f"""
-                SELECT content, metadata, 1 - (embedding <=> '{emb_str}'::vector) AS similarity
-                FROM documents WHERE metadata->>\'source\' = '{filter_source}'
-                ORDER BY embedding <=> '{emb_str}'::vector LIMIT {top_k}
+            sql = """
+                SELECT content, metadata, 1 - (embedding <=> :embedding::vector) AS similarity
+                FROM documents WHERE metadata->>'source' = :filter_source
+                ORDER BY embedding <=> :embedding::vector LIMIT :top_k
             """
+            params = {"embedding": emb_str, "filter_source": filter_source, "top_k": top_k}
         else:
-            sql = f"""
-                SELECT content, metadata, 1 - (embedding <=> '{emb_str}'::vector) AS similarity
+            sql = """
+                SELECT content, metadata, 1 - (embedding <=> :embedding::vector) AS similarity
                 FROM documents
-                ORDER BY embedding <=> '{emb_str}'::vector LIMIT {top_k}
+                ORDER BY embedding <=> :embedding::vector LIMIT :top_k
             """
-        rows = conn.execute(text(sql)).fetchall()
+            params = {"embedding": emb_str, "top_k": top_k}
+        rows = conn.execute(text(sql), params).fetchall()
         return [
             {"content": row[0], "metadata": row[1] if isinstance(row[1], dict) else {}, "similarity": float(row[2])}
             for row in rows

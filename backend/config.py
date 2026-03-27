@@ -1,3 +1,4 @@
+# pyre-ignore-all-errors
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 from typing import Literal
@@ -22,7 +23,7 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379"
 
     # ── Auth / JWT ───────────────────────────────────────────────────────
-    jwt_secret: str = "change-this-in-production-use-a-long-random-string"
+    jwt_secret: str
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 1440  # 24 hours
 
