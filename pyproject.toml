@@ -1,0 +1,13 @@
+[tool.pyright]
+include = ["backend", "backend/scripts", "backend/tests"]
+extraPaths = ["backend"]
+
+[tool.pylance]
+extraPaths = ["backend"]
+
+[tool.mypy]
+mypy_path = "backend"
+
+[tool.pyre]
+source_directories = ["backend"]
+search_path = ["backend"]
