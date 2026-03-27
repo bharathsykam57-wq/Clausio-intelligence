@@ -1,0 +1,17 @@
+{
+  "source_directories": [
+    "backend"
+  ],
+  "search_path": [
+    "backend",
+    "venv/lib/python3.10/site-packages",
+    "venv/lib/python3.11/site-packages",
+    "venv/lib/python3.9/site-packages",
+    "venv/lib/python3.8/site-packages",
+    ".venv/lib/python3.10/site-packages",
+    ".venv/lib/python3.11/site-packages",
+    ".venv/lib/python3.9/site-packages",
+    ".venv/lib/python3.8/site-packages"
+  ],
+  "strict": false
+}
