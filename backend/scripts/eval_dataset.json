@@ -1,0 +1,122 @@
+[
+  {
+    "id": "eval-001",
+    "query": "What are the penalties for non-compliance with the AI Act?",
+    "expected_answer": "According to the AI Act, penalties for non-compliance can include administrative fines of up to 35 million EUR or 7% of total worldwide annual turnover.",
+    "expected_docs": ["article 71", "penalties"]
+  },
+  {
+    "id": "eval-002",
+    "query": "What is the definition of biometric categorization?",
+    "expected_answer": "Biometric categorization is defined as assigning natural persons to specific categories based on their biometric data.",
+    "expected_docs": ["article 3", "definitions", "biometric"]
+  },
+  {
+    "id": "eval-003",
+    "query": "What constitutes high-risk AI systems?",
+    "expected_answer": "High-risk AI systems include applications used in critical infrastructure, educational training, employment, essential private and public services, and law enforcement.",
+    "expected_docs": ["annex iii", "high-risk", "article 6"]
+  },
+  {
+    "id": "eval-004",
+    "query": "What is the primary objective of the GDPR?",
+    "expected_answer": "To protect natural persons with regard to the processing of personal data and on the free movement of such data.",
+    "expected_docs": ["gdpr article 1", "objective"]
+  },
+  {
+    "id": "eval-005",
+    "query": "Under GDPR, how long does an organization have to report a data breach?",
+    "expected_answer": "Without undue delay and, where feasible, not later than 72 hours after having become aware of it.",
+    "expected_docs": ["gdpr article 33", "breach notification"]
+  },
+  {
+    "id": "eval-006",
+    "query": "Does the AI act ban social scoring?",
+    "expected_answer": "Yes, AI systems providing social scoring of natural persons for general purpose by public authorities or on their behalf are prohibited.",
+    "expected_docs": ["article 5", "prohibited ai practices", "social scoring"]
+  },
+  {
+    "id": "eval-007",
+    "query": "What is a Data Protection Impact Assessment (DPIA)?",
+    "expected_answer": "A process to systematically analyze, identify and minimize the data protection risks of a project under the GDPR.",
+    "expected_docs": ["gdpr article 35", "dpia"]
+  },
+  {
+    "id": "eval-008",
+    "query": "Is real-time remote biometric identification allowed by the AI Act?",
+    "expected_answer": "It is generally prohibited for law enforcement in publicly accessible spaces, with narrow exceptions like targeted searches for specific victims or terrorism prevention.",
+    "expected_docs": ["article 5", "biometric identification"]
+  },
+  {
+    "id": "eval-009",
+    "query": "What rights do data subjects have under GDPR Article 17?",
+    "expected_answer": "The right to erasure, often known as the 'right to be forgotten'.",
+    "expected_docs": ["gdpr article 17", "right to erasure"]
+  },
+  {
+    "id": "eval-010",
+    "query": "Who is exempt from the AI act regulations?",
+    "expected_answer": "Systems exclusively developed or used for military, defense, or national security purposes are exempt.",
+    "expected_docs": ["article 2", "scope", "exemptions"]
+  },
+  {
+    "id": "eval-011",
+    "query": "What does 'lawfulness, fairness and transparency' refer to?",
+    "expected_answer": "It is one of the core principles relating to processing of personal data under GDPR Article 5.",
+    "expected_docs": ["gdpr article 5", "principles"]
+  },
+  {
+    "id": "eval-012",
+    "query": "What are the obligations of high-risk AI providers?",
+    "expected_answer": "They must establish a risk management system, conduct data governance, ensure transparency to users, and implement human oversight measures.",
+    "expected_docs": ["article 16", "obligations", "providers"]
+  },
+  {
+    "id": "eval-013",
+    "query": "What is a supervisory authority under GDPR?",
+    "expected_answer": "An independent public authority which is established by a Member State pursuant to GDPR article 51 to monitor its application.",
+    "expected_docs": ["gdpr article 51", "supervisory authority"]
+  },
+  {
+    "id": "eval-014",
+    "query": "How does the AI Act define general-purpose AI?",
+    "expected_answer": "An AI system that can be used for a wide range of tasks and can be integrated into a variety of downstream systems/applications.",
+    "expected_docs": ["article 3", "general purpose ai"]
+  },
+  {
+    "id": "eval-015",
+    "query": "Does a processor need the controller's permission to hire a sub-processor?",
+    "expected_answer": "Yes, under GDPR Article 28, a processor shall not engage another processor without prior specific or general written authorisation of the controller.",
+    "expected_docs": ["gdpr article 28", "processor"]
+  },
+  {
+    "id": "eval-016",
+    "query": "Are deepfakes regulated by the AI Act?",
+    "expected_answer": "Yes, they are subject to transparency requirements, meaning it must be clearly disclosed that the content has been artificially generated or manipulated.",
+    "expected_docs": ["article 52", "transparency", "deepfakes"]
+  },
+  {
+    "id": "eval-017",
+    "query": "What is the right to data portability?",
+    "expected_answer": "The right to receive personal data concerning them in a structured, commonly used and machine-readable format and transmit it to another controller.",
+    "expected_docs": ["gdpr article 20", "data portability"]
+  },
+  {
+    "id": "eval-018",
+    "query": "What requirements apply to AI used for emotion recognition?",
+    "expected_answer": "It generally faces strict transparency requirements, and using it in workplaces or educational institutions is prohibited unless for medical or safety reasons.",
+    "expected_docs": ["article 5", "emotion recognition", "prohibited"]
+  },
+  {
+    "id": "eval-019",
+    "query": "How is a Data Protection Officer (DPO) appointed?",
+    "expected_answer": "They must be designated based on their professional qualities, expert knowledge of data protection law, and ability to fulfill GDPR tasks.",
+    "expected_docs": ["gdpr article 37", "dpo"]
+  },
+  {
+    "id": "eval-020",
+    "query": "Is a conformity assessment required for high-risk AI?",
+    "expected_answer": "Yes, high-risk systems must undergo a conformity assessment procedure to demonstrate compliance before being placed on the market.",
+    "expected_docs": ["article 43", "conformity assessment"]
+  }
+]
